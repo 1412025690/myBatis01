@@ -8,6 +8,71 @@
 <!-- namespace="实体类的完全限定名" -->
 <mapper namespace="com.kkb.mapper.TeamMapper">
 
+    <!--
+        返回类型可以是基本类型: 要求返回的数据必须是 单行,
+        如果是 单行 多列 也取不到后面的值
+        如果是多行 则报错 : SQLSyntaxErrorException
+     -->
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(teamId) from team
+    </select>
+
+
+    <select id="getTwoColumn" resultType="java.util.HashMap">
+        select count(teamId) as 'sum',max(teamId) as 'max' from team
+        where teamId = #{id}
+    </select>
+
+    <select id="getTwoColumnList" resultType="java.util.HashMap">
+        select count(teamId) as 'sum',max(teamId) as 'max' from team group by location
+    </select>
+
+
+    <select id="queryByName" resultType="com.kkb.pojo.Team">
+        select * from team
+        where teamName = #{teamName}
+    </select>
+
+    <select id="queryByLocation" resultType="com.kkb.pojo.Team">
+        select * from team
+        where location = #{location}
+    </select>
+
+    <select id="queryByFiled" resultType="com.kkb.pojo.Team">
+        select * from team
+        where ${column} = #{columnValue}
+    </select>
+
+
+
+    <!--  方式1
+        细节1:
+            从 mybatis3.3 版本之前可以直接写#{0} #{1}
+            从 mybatis3.4 版本开始需要使用#{arg0} #{arg1} ... 或者 #{param1} #{param2} ...
+        细节2:
+            sql语句当中不能使用小于号 使用转义符替代(&lt;)  大于号没有限制 也可以使用转义符号(&gt)
+     -->
+    <select id="queryByRange1" resultType="com.kkb.pojo.Team">
+        select * from team
+        where teamId >= #{arg0} and teamId &lt;= #{arg1}
+    </select>
+    <!-- 方式2 #{} 中名称必须与接口方法中参数注解名称一致 @Param()   推荐使用! -->
+    <select id="queryByRange2" resultType="com.kkb.pojo.Team">
+        select * from team
+        where teamId >= #{min} and teamId &lt;= #{max}
+    </select>
+    <!-- 方式3 #{} 中名称必须与Map集合中key保持一致 -->
+    <select id="queryByRange3" resultType="com.kkb.pojo.Team">
+        select * from team
+        where teamId >= #{min} and teamId &lt;= #{max}
+    </select>
+    <!-- 方式4 #{} 中名称必须与 pojo 的参数属性保持一致 -->
+    <select id="queryByCondition" resultType="com.kkb.pojo.Team">
+        select * from team
+        where teamId >= #{min} and teamId &lt;= #{max} and teamName
+        like #{name} and location = #{location}
+    </select>
+
     <delete id="del">
         delete from team where teamId = #{id}
     </delete>

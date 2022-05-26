@@ -1,13 +1,38 @@
 package com.kkb.mapper;
 
+import com.kkb.pojo.QueryVO;
 import com.kkb.pojo.Team;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Mapper接口
  */
 public interface TeamMapper {
+
+
+
+    List<Map<String,Object>> getTwoColumnList();
+    Map<String,Object> getTwoColumn(int teamId);
+
+    int getCount();
+
+
+    List<Team> queryByName(String teamName);
+    List<Team> queryByLocation(String location);
+    List<Team> queryByFiled(@Param("column") String column,@Param("columnValue") String value);
+
+
+
+    List<Team> queryByCondition(QueryVO vo);
+    List<Team> queryByRange3(Map<String,Object> map);
+    List<Team> queryByRange2(@Param("min")Integer min,@Param("max") Integer max);
+
+    List<Team> queryByRange1(Integer min,Integer max);
+
+
     //查询所有
     List<Team> queryAll();
 
