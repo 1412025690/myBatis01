@@ -16,7 +16,7 @@ import java.io.Reader;
  */
 public class MyBatisUtil {
     private static ThreadLocal<SqlSession> sqlSessionThreadLocal = new ThreadLocal<>();
-    private static SqlSessionFactory factory;
+    private static SqlSessionFactory factory = null;
 
     static {
         Reader reader = null;

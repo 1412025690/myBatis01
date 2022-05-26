@@ -114,4 +114,32 @@
     <select id="queryById" parameterType="java.lang.Integer" resultType="com.kkb.pojo.Team">
         select * from team where teamId = ${id};
     </select>
+
+    <!--
+        resultMap 与 resultType 不能同时出现
+        resultMap : 是引用的自己创建resultMap的名称
+     -->
+    <select id="queryAll2" resultMap="baseResultMap">
+        select * from team;
+    </select>
+
+
+    <!--
+        创建resultMap: 相当于自己去编写表中的列与实体类当中的属性映射
+        id: resultMap 的名称,要求唯一
+        type: 期待要映射为java的什么类型
+    -->
+    <resultMap id="baseResultMap" type="">
+        <!--
+            主键列用id,其余列用result
+            column : 表示数据库表中列名,不区分大小写
+            property : 表示实体类当中对应属性名 , 区分大小写
+            javaType : 实体类当中对应属性类型 , 可以省略 MyBatis会自动推断
+            jdbcType : 数据库中 column 类型 一般省略
+        -->
+        <id column="teamId" property="teamId" javaType="java.lang.Integer" ></id>
+        <result column="teamName" property="teamName" javaType="java.lang.String"></result>
+        <result column="location" property="location" javaType="java.lang.String"></result>
+        <result column="createTime" property="createTime" javaType="java.lang.String"></result>
+    </resultMap>
 </mapper>

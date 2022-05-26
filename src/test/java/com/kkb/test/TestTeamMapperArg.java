@@ -82,4 +82,9 @@ public class TestTeamMapperArg {
             System.out.println(map);
         }
     }
+    @Test
+    public void test10(){
+        List<Team> teams = teamMapper.queryAll2();
+        teams.forEach(team -> System.out.println(team));
+    }
 }

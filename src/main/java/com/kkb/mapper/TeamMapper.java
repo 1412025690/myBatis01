@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public interface TeamMapper {
 
-
+    List<Team> queryAll2();
 
     List<Map<String,Object>> getTwoColumnList();
     Map<String,Object> getTwoColumn(int teamId);
