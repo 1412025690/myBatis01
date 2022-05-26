@@ -1,13 +1,13 @@
-package com.kkb.dao;
+package com.kkb.mapper;
 
 import com.kkb.pojo.Team;
 
 import java.util.List;
 
 /**
- * 原有的Dao写法
+ * Mapper接口
  */
-public interface TeamDao {
+public interface TeamMapper {
     //查询所有
     List<Team> queryAll();
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 映射文件:实体类与数据库表的映射 ORM思想 object relation mapping
+     SQL语句从代码的硬编码当中抽取出来
+-->
+<!-- namespace="实体类的完全限定名" -->
+<mapper namespace="com.kkb.mapper.GameRecordMapper">
+    <insert id="add" parameterType="com.kkb.pojo.GameRecord">
+        <selectKey keyProperty="recordId" order="BEFORE" resultType="java.lang.String">
+            select UUID()
+        </selectKey>
+        INSERT INTO `mybatis`.`gamerecord` (`recordId`, `homeTeamId`, `score`, `visitingTeamId`)
+        VALUES (#{recordId}, #{homeTeamId}, #{score}, ${visitingTeamId})
+    </insert>
+
+
+</mapper>

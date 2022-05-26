@@ -28,5 +28,7 @@
     <!-- 在配置文件当中去注册映射文件 -->
     <mappers>
         <mapper resource="com/kkb/pojo/Team.xml"/>
+        <mapper resource="com/kkb/mapper/TeamMapper.xml"/>
+        <mapper resource="com/kkb/mapper/GameRecordMapper.xml"/>
     </mappers>
 </configuration>
