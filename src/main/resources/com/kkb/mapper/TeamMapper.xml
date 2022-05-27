@@ -51,6 +51,9 @@
             从 mybatis3.4 版本开始需要使用#{arg0} #{arg1} ... 或者 #{param1} #{param2} ...
         细节2:
             sql语句当中不能使用小于号 使用转义符替代(&lt;)  大于号没有限制 也可以使用转义符号(&gt)
+        常问面试题: #{} ${} 有什么区别
+                 #{} 是预编译处理 相当于 jdbc的占位符
+                 ${} 是将传入的数据都当成一个字符串 , 会对自动传入的数据加一个双引号
      -->
     <select id="queryByRange1" resultType="com.kkb.pojo.Team">
         select * from team
@@ -106,13 +109,13 @@
          resultType:返回的类型,如果是集合写的是集合当中元素的类型 : 使用要求: 实体类当中属性和表当中列名一致
     -->
     <select id="queryAll" resultType="com.kkb.pojo.Team">
-        select * from team;
+        select * from team
     </select>
     <!-- parameterType:表示参数类型,参数唯一的时候才使用该属性;可以省略,框架会自己判定类型
          #{自定义的参数名称} 名称没有实际意义
      -->
     <select id="queryById" parameterType="java.lang.Integer" resultType="com.kkb.pojo.Team">
-        select * from team where teamId = ${id};
+        select * from team where teamId = ${id}
     </select>
 
     <!--
@@ -120,7 +123,7 @@
         resultMap : 是引用的自己创建resultMap的名称
      -->
     <select id="queryAll2" resultMap="baseResultMap">
-        select * from team;
+        select * from team
     </select>
 
 
@@ -129,7 +132,7 @@
         id: resultMap 的名称,要求唯一
         type: 期待要映射为java的什么类型
     -->
-    <resultMap id="baseResultMap" type="">
+    <resultMap id="baseResultMap" type="com.kkb.pojo.Team">
         <!--
             主键列用id,其余列用result
             column : 表示数据库表中列名,不区分大小写

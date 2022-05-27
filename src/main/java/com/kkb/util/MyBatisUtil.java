@@ -16,7 +16,7 @@ import java.io.Reader;
  */
 public class MyBatisUtil {
     private static ThreadLocal<SqlSession> sqlSessionThreadLocal = new ThreadLocal<>();
-    private static SqlSessionFactory factory = null;
+    private static SqlSessionFactory factory;
 
     static {
         Reader reader = null;
@@ -34,7 +34,7 @@ public class MyBatisUtil {
      * @return
      */
     public static SqlSession getSqlSession(){
-        //从 ThreadLocal(线程安全) 中获取
+        //从ThreadLocal中获取
         SqlSession sqlSession = sqlSessionThreadLocal.get();
         if(sqlSession == null) {
             //创建sqlSession

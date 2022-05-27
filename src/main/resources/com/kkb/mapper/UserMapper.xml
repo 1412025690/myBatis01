@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kkb.mapper.UsersMapper">
+    <!-- 方式1:resultType 中的实体类属性作为查询语句中的别名,让别名和属性保持一致 -->
+    <select id="queryById" resultType="com.kkb.pojo.Users">
+        select user_id as userId,user_name as userName,user_age as userAge from users where user_id = #{id}
+    </select>
+    <!-- 方式2: 通过resulMap 进行自行映射  使用频率较多  -->
+    <select id="queryById2" resultMap="baseMap">
+        select * from users where user_id = #{id}
+    </select>
+
+    <resultMap id="baseMap" type="com.kkb.pojo.Users">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_age" property="userAge"/>
+    </resultMap>
+</mapper>
