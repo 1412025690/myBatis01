@@ -14,6 +14,12 @@
         <setting name="cacheEnabled" value="true"/>
     </settings>
 
+    <!-- 设置别名 -->
+    <typeAliases>
+        <package name="com.kkb.pojo"/>
+        <package name="com.kkb.mapper"/>
+    </typeAliases>
+
     <!-- 配置mybatis环境 -->
     <environments default="development">
         <!-- id数据源名称 -->
@@ -36,6 +42,7 @@
         <mapper resource="com/kkb/mapper/TeamMapper.xml"/>
         <mapper resource="com/kkb/mapper/GameRecordMapper.xml"/>
         <mapper resource="com/kkb/mapper/UserMapper.xml"/>
+        <mapper resource="com/kkb/mapper/PlayerMapper.xml"/>
 
 <!--        <mapper class="com.kkb.pojo.Team"/>-->
 <!--        <mapper class="com.kkb.mapper.TeamMapper"/>-->

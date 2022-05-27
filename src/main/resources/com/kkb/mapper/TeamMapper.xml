@@ -133,16 +133,39 @@
         type: 期待要映射为java的什么类型
     -->
     <resultMap id="baseResultMap" type="com.kkb.pojo.Team">
-        <!--
-            主键列用id,其余列用result
-            column : 表示数据库表中列名,不区分大小写
-            property : 表示实体类当中对应属性名 , 区分大小写
-            javaType : 实体类当中对应属性类型 , 可以省略 MyBatis会自动推断
-            jdbcType : 数据库中 column 类型 一般省略
+        <!--一般主键列用id,其余列用result
+            column：表示数据库表中的列名，不区分大小写
+            property：表示实体类中的对应的属性名，区分大小写
+            javaType：实体类中的对应的属性的类型，可以省略，mybatis会自己推断
+            jdbcType="数据库中的类型column的类型" 一般省略
         -->
         <id column="teamId" property="teamId" javaType="java.lang.Integer" ></id>
         <result column="teamName" property="teamName" javaType="java.lang.String"></result>
         <result column="location" property="location" javaType="java.lang.String"></result>
-        <result column="createTime" property="createTime" javaType="java.lang.String"></result>
+        <result column="createTime" property="createTime" javaType="java.util.Date"></result>
+    </resultMap>
+
+
+    <!-- 1.连接查询 + 引用关联对象结果映射 -->
+    <select id="queryById1" resultMap="joinPlayMap1">
+        select * from team t inner join player p on t.teamId = p.teamId where t.teamId = #{id}
+    </select>
+    <!--
+        collection: 对多映射的节点
+        property:   实体类中要查询的集合
+        javaType:   集合类型
+        ofType:     集合类型当中元素的类型
+        resultMap:  引用那个结果的映射
+    -->
+    <resultMap id="joinPlayMap1" type="Team" extends="baseResultMap">
+        <collection property="playerList1" javaType="arraylist" ofType="Player" resultMap="com.kkb.mapper.PlayerMapper.baseResultMap" />
+    </resultMap>
+
+    <!-- 2.使用关联对象单独的查询语句 -->
+    <select id="queryById2" resultMap="joinPlayMap2">
+        select * from team where teamId = #{id}
+    </select>
+    <resultMap id="joinPlayMap2" type="Team" extends="baseResultMap">
+        <collection property="playerList2" javaType="arraylist" ofType="Player" select="com.kkb.mapper.PlayerMapper.queryByTeamId" column="teamId" />
     </resultMap>
 </mapper>

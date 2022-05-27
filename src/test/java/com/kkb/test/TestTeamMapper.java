@@ -27,7 +27,9 @@ public class TestTeamMapper {
 
     @Test
     public void testQueryById(){
-        teamMapper.queryById(1001);
+        TeamMapper teamMapper = MyBatisUtil.getSqlSession().getMapper(TeamMapper.class);
+        Team team = teamMapper.queryById(1025);
+        System.out.println(team);
     }
     @Test
     public void testDel(){
