@@ -8,6 +8,51 @@
 <!-- namespace="实体类的完全限定名" -->
 <mapper namespace="com.kkb.mapper.TeamMapper">
 
+    <delete id="delList" >
+        delete from team where teamId in
+        <!--
+            collection: 要遍历的集合,参数是集合类型,直接写list
+            item:遍历的集合当中每一个数据
+            separator:将遍历的结果用,分割
+            open close : 表示 将遍历的结果使用open close包裹起来
+        -->
+        <foreach collection="list" item="teamId" separator="," open="(" close=")">
+            #{teamId}
+        </foreach>
+    </delete>
+
+    <insert id="addList" parameterType="arraylist">
+        INSERT INTO team (teamName,location) VALUE
+        <!--
+            collection: 要遍历的集合,参数是集合类型,直接写list
+            item:遍历的集合当中每一个数据
+            separator:将遍历的结果用,分割
+        -->
+
+        <foreach collection="list" item="t" separator=",">
+            (#{t.teamName},#{t.location})
+        </foreach>
+    </insert>
+
+
+    <select id = "queryByVO" parameterType="QueryVO" resultMap="baseResultMap">
+        select * from team
+        <where>
+            <!-- 如果用户输入了名称,就模糊查询 -->
+            <if test="name != null">
+                teamName like concat(concat('%',#{name}),'%')
+            </if>
+            <if test="beginTime != null">
+                and createTime >= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                and createTime &lt;= #{endTime}
+            </if>
+            <if test="location != null">
+                and location = #{location}
+            </if>
+        </where>
+    </select>
     <!--
         返回类型可以是基本类型: 要求返回的数据必须是 单行,
         如果是 单行 多列 也取不到后面的值
@@ -82,9 +127,26 @@
 
     <!-- 根据id更改用户名与地址 -->
     <update id="update" parameterType="com.kkb.pojo.Team">
-        update team set teamName = #{teamName},location = #{location}
+        update team set teamName = #{teamName},location = #{location},createTime = #{createTime}
         where teamId = #{teamId}
     </update>
+
+    <update id="update1" parameterType="com.kkb.pojo.Team">
+        update team
+        <set>
+            <if test="teamName != null">
+                teamName = #{teamName},
+            </if>
+            <if test="location != null">
+                location = #{location},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+        </set>
+        where teamId =  #{teamId}
+    </update>
+
 
     <!--
         添加一个球队

@@ -19,7 +19,13 @@
         <package name="com.kkb.pojo"/>
         <package name="com.kkb.mapper"/>
     </typeAliases>
-
+    <!-- 配置分页插件 -->
+    <plugins>
+        <!-- 5.0版本之前使用PageHelper,5.0之后使用PageInterceptor -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
     <!-- 配置mybatis环境 -->
     <environments default="development">
         <!-- id数据源名称 -->
@@ -38,11 +44,11 @@
     </environments>
     <!-- 在配置文件当中去注册映射文件 -->
     <mappers>
-        <mapper resource="com/kkb/pojo/Team.xml"/>
-        <mapper resource="com/kkb/mapper/TeamMapper.xml"/>
-        <mapper resource="com/kkb/mapper/GameRecordMapper.xml"/>
-        <mapper resource="com/kkb/mapper/UserMapper.xml"/>
-        <mapper resource="com/kkb/mapper/PlayerMapper.xml"/>
+        <package name="com.kkb.pojo"/>
+        <package name="com.kkb.mapper"/>
+        <package name="org.xzk.pojo"/>
+        <package name="org.xzk.mapper"/>
+
 
 <!--        <mapper class="com.kkb.pojo.Team"/>-->
 <!--        <mapper class="com.kkb.mapper.TeamMapper"/>-->
