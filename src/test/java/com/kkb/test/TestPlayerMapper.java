@@ -35,7 +35,6 @@ public class TestPlayerMapper {
         Player player = playerMapper.queryById3(1);
         System.out.println(player);
     }
-    //TODO : 报错1
     @Test
     public void test5(){
         Team team = teamMapper.queryById1(1025);
@@ -44,13 +43,11 @@ public class TestPlayerMapper {
         System.out.println("该球队的球员个数:"+playerList.size());
         playerList.forEach(player -> System.out.println(player));
     }
-    //TODO : 报错2
     @Test
     public void test6(){
         List<Player> players = playerMapper.queryByTeamId(1025);
         players.forEach(player -> System.out.println(player));
     }
-    //TODO : 报错3
     @Test
     public void test7(){
         Team team = teamMapper.queryById2(1025);
